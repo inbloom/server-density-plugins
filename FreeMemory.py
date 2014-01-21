@@ -27,7 +27,7 @@ class FreeMemory:
                 data['MemFree'] = int(re.findall('\d+', line)[0])
             elif "Buffers" in line:
                 data['Buffers'] = int(re.findall('\d+', line)[0])
-            elif "Cached" in line:
+            elif re.match('^Cached', line):
                 data['Cached'] = int(re.findall('\d+', line)[0])
         data['AvailableMemory'] = data['MemFree'] + data['Buffers'] + data['Cached']
         return data
