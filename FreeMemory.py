@@ -22,12 +22,13 @@ class FreeMemory:
 
     def run(self):
         data = { }
-        for line in open("/proc/meminfo"):
-            if "MemFree" in line:
-                data['MemFree'] = int(re.findall('\d+', line)[0])
-            elif "Buffers" in line:
-                data['Buffers'] = int(re.findall('\d+', line)[0])
-            elif re.match('^Cached', line):
-                data['Cached'] = int(re.findall('\d+', line)[0])
+        with open("/proc/meminfo") as fd:
+            for line in fd:
+                if "MemFree" in line:
+                    data['MemFree'] = int(re.findall('\d+', line)[0])
+                elif "Buffers" in line:
+                    data['Buffers'] = int(re.findall('\d+', line)[0])
+                elif re.match('^Cached', line):
+                    data['Cached'] = int(re.findall('\d+', line)[0])
         data['AvailableMemory'] = data['MemFree'] + data['Buffers'] + data['Cached']
         return data
