@@ -12,8 +12,10 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 
-import re
-class FreeMemory:
+import calendar
+import os
+import time
+class LastChefRun:
     def __init__(self, agentConfig, checksLogger, rawConfig):
                 self.agentConfig = agentConfig
                 self.checksLogger = checksLogger
@@ -21,13 +23,5 @@ class FreeMemory:
 
     def run(self):
         data = { }
-        with open("/proc/meminfo") as fd:
-            for line in fd:
-                if "MemFree" in line:
-                    data['MemFree'] = int(re.findall('\d+', line)[0])
-                elif "Buffers" in line:
-                    data['Buffers'] = int(re.findall('\d+', line)[0])
-                elif re.match('^Cached', line):
-                    data['Cached'] = int(re.findall('\d+', line)[0])
-        data['AvailableMemory'] = data['MemFree'] + data['Buffers'] + data['Cached']
+	data['LastGoodRun'] = int(calendar.timegm(time.gmtime()) - os.stat("/var/chef/reports/last-good-run.json").st_mtime)
         return data
