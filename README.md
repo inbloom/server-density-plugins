@@ -11,3 +11,5 @@ This plugin expands on the built in Server Density available memory metric to ta
 LastChefRun
 -----------
 This plugin reports the time in seconds since the last succesful chef-client run.
+This plugin requires the following report handler to be configured. https://github.com/omniti-labs/chef-tools/blob/master/handlers/last_good_run.rb
+More information about chef handlers: http://docs.opscode.com/handlers.html
