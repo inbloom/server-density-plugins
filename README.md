@@ -8,3 +8,6 @@ Below is a list of plugins within this repo and a brief description of its use.
 FreeMemory
 ----------
 This plugin expands on the built in Server Density available memory metric to take into account caching/buffers.
+LastChefRun
+-----------
+This plugin reports the time in seconds since the last succesful chef-client run.
