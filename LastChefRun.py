@@ -23,5 +23,10 @@ class LastChefRun:
 
     def run(self):
         data = { }
-	data['LastGoodRun'] = int(calendar.timegm(time.gmtime()) - os.stat("/var/chef/reports/last-good-run.json").st_mtime)
+        try:
+            f = open("/var/chef/reports/last-good-run.json")
+            data['LastGoodRun'] = int(calendar.timegm(time.gmtime()) - os.stat("/var/chef/reports/last-good-run.json").st_mtime)
+            f.close()
+        except IOError:
+            data['LastGoodRun'] = None
         return data
